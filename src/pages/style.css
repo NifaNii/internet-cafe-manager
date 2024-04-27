@@ -1,0 +1,75 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #eeeaea;
+    
+}
+
+/* Table Container */
+.table-container {
+    width: 50%; /* Adjusted width for the table container */
+    margin: 20px; /* Add margin to separate from the edges of the page */
+    background-color: rgb(255, 255, 255);
+}
+
+.content-container {
+    display: flex;
+    justify-content:space-between;
+    flex-direction: row-reverse;
+}
+
+.table-container table {
+    width: 100%; /* Table takes full width of its container */
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    border: 1px solid #a5a5a5;
+    padding: 10px;
+}
+
+/* Search Bar */
+.search-bar {
+    margin-bottom: 20px; /* Adjusted margin for spacing */
+    margin-top: 10px;
+    margin-left:20px;
+    width:5in;
+}
+
+.search-bar input[type="text"] {
+    width: 100%; /* Search input takes full width */
+    padding: 5px;
+}
+
+/* User Details */
+.user-details {
+    background-color: #eeeaea;
+    padding: 20px;
+    height: 230px;
+    width: 18%; /* Adjusted width for user details */
+    border:2px solid #7a7a7a;
+    text-align: center;
+    position: absolute;
+    top: 110px;
+    right: 100px;
+}
+
+.user-details .details p {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.user-details button {
+    margin-top: 20px;
+    background-color: #68c6eb; /* Example green color */
+    border: 1px solid #7a7a7a; /* Add border */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
