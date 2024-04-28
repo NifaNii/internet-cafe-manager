@@ -16,26 +16,28 @@ function App() {
 
   return (
     <>
-        <Routes>
           {/* if admin is logged in */}
           {isLoggedIn && (
             <>
             <Navbar />
-            
+
+            <Routes>
               <Route index element={<PCManagement />} />
               <Route path="/pc" element={<PCManagement />}/>
               <Route path="/members" element={<Members />}/>
               <Route path="/queue" element={<Queue />}/>
+            </Routes>
             </>
           )}
 
           {/* if admin is not logged in */}
           {!isLoggedIn && (
             <>
+            <Routes>
               <Route path="/" element={<Login />}/>
+            </Routes>
             </>
           )}
-        </Routes>
     </>
   );
 }
