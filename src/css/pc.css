@@ -1,0 +1,122 @@
+/* pc.css */
+
+/* Example styles for PC items */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-gap {
+    gap: 1rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.w-12 {
+    width: 3rem; /* Adjust as needed */
+}
+
+.h-9 {
+    height: 2.25rem; /* Adjust as needed */
+}
+
+/* Example styles for PC details */
+.bg-gray-200 {
+    background-color: #e5e7eb; /* Adjust as needed */
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.dark\:bg-zinc-700 {
+    /* Add dark mode background color */
+}
+
+.rounded-md {
+    border-radius: 0.375rem; /* Adjust as needed */
+}
+
+.text-lg {
+    font-size: 1.125rem; /* Adjust as needed */
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.mb-3 {
+    margin-bottom: 0.75rem; /* Adjust as needed */
+}
+
+.block {
+    display: block;
+}
+
+.text-sm {
+    font-size: 0.875rem; /* Adjust as needed */
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem; /* Adjust as needed */
+}
+
+.w-full {
+    width: 100%;
+}
+
+.p-2 {
+    padding: 0.5rem; /* Adjust as needed */
+}
+
+.border {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Adjust as needed */
+}
+
+.bg-red-500 {
+    background-color: #f56565; /* Adjust as needed */
+}
+
+.hover\:bg-red-600:hover {
+    background-color: #e53e3e; /* Adjust as needed */
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+.bg-blue-500 {
+    background-color: #4299e1; /* Adjust as needed */
+}
+
+.hover\:bg-blue-600:hover {
+    background-color: #3182ce; /* Adjust as needed */
+}
+
+/* Additional styles for layout */
+.w-1 {
+    width: 50%;
+}
+
+.p-4 {
+    padding: 1rem; /* Adjust as needed */
+}
+
+.overflow-auto {
+    overflow: auto; /* Adjust as needed */
+}
