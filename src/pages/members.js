@@ -7,7 +7,7 @@ export default function Members() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedMember, setSelectedMember] = useState(null);
     const [editedMember, setEditedMember] = useState({});
-    const [showPassword, setShowPassword] = useState(false); // State to track password visibility
+    const [showPassword, setShowPassword] = useState(false); 
 
     const fetchMembers = async () => {
         try {
@@ -20,14 +20,14 @@ export default function Members() {
 
     useEffect(() => {
         fetchMembers();
-    }, []); // Empty dependency array to ensure fetchMembers is called only once
+    }, []); 
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
     const handleSearchSubmit = async (event) => {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault();
         searchMembers();
     };
 
@@ -37,10 +37,10 @@ export default function Members() {
             const foundMember = response.data.find(member => member.username === searchTerm);
             if (foundMember) {
                 setSelectedMember(foundMember);
-                setEditedMember({ ...foundMember }); // Set the edited member to the found member
+                setEditedMember({ ...foundMember }); 
             } else {
-                setSelectedMember(null); // Reset selected member if no member found
-                setEditedMember({}); // Reset edited member
+                setSelectedMember(null); 
+                setEditedMember({}); 
             }
             setMembers(response.data);
         } catch (error) {
@@ -61,7 +61,6 @@ export default function Members() {
         try {
             await axios.put(`http://localhost:8080/member/updateMember?id=${editedMember.id}`, editedMember);
             alert('Changes saved successfully!');
-            // After saving changes, refresh the member list to reflect updated data
             fetchMembers();
         } catch (error) {
             console.error('Error saving changes:', error);
@@ -81,7 +80,7 @@ export default function Members() {
 
     return (
         <div className="tab-content">
-            <form onSubmit={handleSearchSubmit}> {/* Use form onSubmit to trigger search on Enter keypress */}
+            <form onSubmit={handleSearchSubmit}> {}
                 <div className="search-bar">
                     <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} />
                 </div>
