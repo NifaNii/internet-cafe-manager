@@ -15,12 +15,14 @@ function App() {
     <>
       <Navbar />
       
+      <div className='routes'>
         <Routes>
           <Route path="/" element={<Login />}/>
           <Route path="/pc" element={<PCManagement />}/>
           <Route path="/members" element={<Members />}/>
           <Route path="/queue" element={<Queue />}/>
         </Routes>
+      </div>
       
     </>
   );
