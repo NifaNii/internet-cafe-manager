@@ -61,7 +61,7 @@ export default function Login(){
     }
 
     return(
-        <div className="main">
+        <div className="login-main">
           <div className="upper-area">
             <h2>INTERNET CAFE <span>MANAGER</span></h2>
           </div>

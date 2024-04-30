@@ -65,7 +65,7 @@ export default function PCManagement() {
     }
 
     return (
-        <div className='main'>
+        <div className='pc-main'>
             <div className='pc-area'>
                 <div className='grid-container'>
                     {listOfPCs.map((item, index) => (
