@@ -8,7 +8,7 @@ export default function Members() {
     const [selectedMember, setSelectedMember] = useState(null);
     const [editedMember, setEditedMember] = useState({});
     const [showPassword, setShowPassword] = useState(false);
-    const [userExists, setUserExists] = useState(true); // State to track if user exists
+    const [userExists, setUserExists] = useState(true); 
 
     const fetchMembers = async () => {
         try {
@@ -39,11 +39,11 @@ export default function Members() {
             if (foundMember) {
                 setSelectedMember(foundMember);
                 setEditedMember({ ...foundMember });
-                setUserExists(true); // Set userExists to true if user is found
+                setUserExists(true); 
             } else {
                 setSelectedMember(null);
                 setEditedMember({});
-                setUserExists(false); // Set userExists to false if user is not found
+                setUserExists(false); 
             }
             setMembers(response.data);
         } catch (error) {
