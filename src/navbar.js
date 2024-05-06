@@ -28,14 +28,14 @@ export default function Navbar(){
     return(
         <>
             <nav>
-                <Link to="/">INTERNET CAFE <span>MANAGER</span></Link>
+                <Link to="/" className='nav-title'>INTERNET CAFE <span className='nav-title-span'>MANAGER</span></Link>
                 <ul className='nav-tabs'>
                     <CustomLink to="/pc">PC</CustomLink>
                     <CustomLink to="/members">MEMBERS</CustomLink>
                     <CustomLink to="/queue">QUEUE</CustomLink>
                 </ul>
                 <div className='admin-icon-area'>
-                    <img src='../images/admin-icon.png' onClick={() => setOpenProfile((prev) => !prev)}/>
+                    <img src='../images/admin-icon.png' onClick={() => setOpenProfile((prev) => !prev)} alt=''/>
                 </div>
 
                 {openProfile && (

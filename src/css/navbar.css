@@ -14,6 +14,15 @@ nav a{
     color: inherit;
 }
 
+.nav-title{
+    font-weight: bold;
+    font-style: italic;
+}
+
+.nav-title-span{
+    color: black;
+}
+
 .nav-tabs{
     padding: 0;
     list-style: none;

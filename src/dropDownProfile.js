@@ -15,7 +15,14 @@ export default function DropDownProfile(){
     return(
         <div className="dropDownProfile">
             <ul>
-                <li onClick={handleLogout}>Logout</li>
+                <li onClick={handleLogout}>
+                    <div className="dd-icon">
+                        <img src="../images/logout.png" alt=""/>
+                    </div>
+                    <span style={{marginLeft: '-3px'}}>
+                        Logout
+                    </span>
+                </li>
             </ul>
         </div>
     );
