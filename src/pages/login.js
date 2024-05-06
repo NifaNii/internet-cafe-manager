@@ -15,6 +15,7 @@ export default function Login(){
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [incoCred, setIncoCred] = useState(false);
 
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
@@ -40,11 +41,13 @@ export default function Login(){
     // -1: invalid credentials
     // -2: not admin
     const navigateTo = useNavigate();
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+      e.preventDefault();
         try{
             const result = await checkAdmin(username, password);
             console.log(result);
             if (result !== -1 && result !== -2) {
+              setIncoCred(false);
               localStorage.setItem("isLoggedIn", true);
               window.history.replaceState(null, null, '/');
               // Added setTimeout
@@ -53,7 +56,7 @@ export default function Login(){
                 navigateTo(0);
               }, 2000);
             } else {
-              alert("Invalid username or password");
+              setIncoCred(true);
             }
           }catch(error){
             alert('Check Eclipse.');
@@ -66,23 +69,31 @@ export default function Login(){
             <h2>INTERNET CAFE <span>MANAGER</span></h2>
           </div>
           <div className="middle-area">
-            <div className="login-area"> 
-              <input
-                type="text"
-                id="username"
-                placeholder="Username"
-                value={username}
-                onChange={handleUsernameChange}
-              />
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={handlePasswordChange}
-              />
-              <button onClick={handleSubmit}>Log In</button>
-            </div>
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="login-area"> 
+                <div className="login-inputs">
+                  <input
+                    type="text"
+                    id="username"
+                    placeholder="Username"
+                    value={username}
+                    onChange={handleUsernameChange}
+                  />
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                  />
+                </div>
+                {incoCred ? (
+                  <p className="login-error">Incorrect username or password.</p>
+                ) : (<p></p>)}
+                <button type="submit">Log In</button>
+                
+              </div>
+            </form>
           </div>
         </div>
     );

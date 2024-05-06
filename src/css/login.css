@@ -30,30 +30,57 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 22rem;
     width: 24rem;
     padding: 4rem;
     background-color: white;
     border-radius: 1rem;
-    margin-left: auto;
-    margin-right: 5rem;
     border-top: 5px solid #0081AA;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+.login-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.login-form{
+    margin-left: auto;
+    margin-right: 5rem;
+}
+
 .login-area input{
+    box-sizing: border-box;
     height: 2.5rem;
     border-radius: 0.5rem;
     border: 1px solid grey;
     padding: 0 1rem 0 1rem;
+    width: 100%;
+}
+
+.login-error{
+    color: red;
 }
 
 .login-area button{
+    font-weight: bold;
     height: 2.5rem;
     border-radius: 0.5rem;
     border: 0;
     background-color: #0081AA;
     color: white;
     font-size: 1rem;
+    cursor: pointer;
+}
+
+.login-area button:hover{
+    background-color: #2a91b1;
+}
+
+@media only screen and (max-width: 390px){
+    .middle-area{
+        width: 390px;
+    }
 }
