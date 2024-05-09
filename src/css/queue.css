@@ -1,0 +1,86 @@
+.queue-system {
+  display: flex; /* Arrange elements side-by-side */
+}
+
+.queue-list {
+  /* Adjusted flex properties */
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.now-serving {
+  /* Adjusted flex properties */
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers elements horizontally */
+  justify-content: center; /* This centers elements vertically */
+  margin: 10px;
+  font-weight: bold;
+}
+
+.now-serving h2 {
+  margin: 0; /* Remove margin */
+  font-size: 500%;
+  text-align: center; /* This centers the text of the h2 element */
+  font-weight: 800;
+}
+
+.now-serving .number {
+  font-size: 10rem; /* Increase the font size for the number */
+  margin: 0; /* Remove margin */
+  font-weight: 400;
+}
+
+.now-serving .name {
+  font-size: 2rem; /* Increase the font size for the name */
+  margin: 0; /* Remove margin */
+  text-align: center; /* This centers the text of the name element */
+}
+
+.now-serving .button-container {
+  margin: 10px 0; /* Adjusted margin */
+  display: flex; /* Keep flexbox for horizontal centering */
+  flex-direction: column; /* Stack buttons vertically */
+  justify-content: center; /* Center buttons vertically within the container */
+  align-items: center; /* Optional: Center buttons horizontally within the column */
+}
+
+.now-serving .button-container button {
+  margin-right: 0.5rem; /* Remove for vertical layout */
+  font-size: 1.2rem; /* Increase the font size for the buttons */
+  background-color: #0081aa;
+  color: #fffcfc; /* Remove display: block; property (already set to default) */
+  margin-bottom: 10px; /* Adjust spacing between buttons if needed */
+}
+
+/* New CSS for cell borders */
+
+.queue-list table {
+  width: 100%; /* Set the width to 100% of its container */
+  border-collapse: collapse; /* Ensures borders between cells */
+}
+
+.queue-list tr {
+  /* Style table rows */
+  border-bottom: 1px solid #ddd; /* Add border to bottom of each row */
+}
+
+.queue-list td,
+.queue-list th {
+  /* Style table cells */
+  padding: 0.5rem; /* Add padding to cells */
+  border: 1px solid #ddd; /* Add border to all sides of cells */
+}
+
+.th {
+  background-color: #0081aa;
+}
+
+/* New CSS for button styles */
+.button-container button.skip {
+  background-color: #fc2600; /* Change skip button color to red */
+}
