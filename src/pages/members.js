@@ -5,7 +5,7 @@ import axios from "axios";
 export default function Members() {
     const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedMember, setSelectedMember] = useState(null);
+    const [selectedMember, setSelectedMember] = useState();
     const [editedMember, setEditedMember] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [userExists, setUserExists] = useState(true); 
@@ -30,31 +30,36 @@ export default function Members() {
 
     const handleSearchSubmit = async (event) => {
         event.preventDefault();
-        searchMembers();
+        // searchMembers();
     };
 
     const handleSearchByChange = (event) => {
         setSearchBy(event.target.value);
     }
 
-    const searchMembers = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/member/getAllMembers?term=${searchTerm}`);
-            const foundMember = response.data.find(member => member.username === searchTerm);
-            if (foundMember) {
-                setSelectedMember(foundMember);
-                setEditedMember({ ...foundMember });
-                setUserExists(true); 
-            } else {
-                setSelectedMember(null);
-                setEditedMember({});
-                setUserExists(false); 
-            }
-            setMembers(response.data);
-        } catch (error) {
-            console.error('Error searching members:', error);
-        }
-    };
+    const handleClickedMember = (member) => {
+        setSelectedMember(member);
+        setEditedMember({ ...member });
+    }
+
+    // const searchMembers = async () => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:8080/member/getAllMembers?term=${searchTerm}`);
+    //         const foundMember = response.data.find(member => member.username === searchTerm);
+    //         if (foundMember) {
+    //             setSelectedMember(foundMember);
+    //             setEditedMember({ ...foundMember });
+    //             setUserExists(true); 
+    //         } else {
+    //             setSelectedMember(null);
+    //             setEditedMember({});
+    //             setUserExists(false); 
+    //         }
+    //         setMembers(response.data);
+    //     } catch (error) {
+    //         console.error('Error searching members:', error);
+    //     }
+    // };
 
     const handleEditChange = (event) => {
         const { name, value } = event.target;
@@ -70,21 +75,22 @@ export default function Members() {
     };
 
     const saveChanges = async () => {
+        console.log(editedMember)
         const isAlphaNumeric = (str) => /^[a-zA-Z0-9]*$/.test(str);
 
         const isValid = Object.values(editedMember).every(value => isAlphaNumeric(value));
 
         const isEmptyField = Object.values(editedMember).some(value => value === '');
 
-        if (isEmptyField){
-            alert('Please fill in all fields.');
-            return;
-        }
+        // if (isEmptyField){
+        //     alert('Please fill in all fields.');
+        //     return;
+        // }
 
-        if (!isValid){
-            alert('Member details should only contain letters and Numbers.');
-            return;
-        }
+        // if (!isValid){
+        //     alert('Member details should only contain letters and Numbers.');
+        //     return;
+        // }
         try {
             await axios.put(`http://localhost:8080/member/updateMember?id=${editedMember.id}`, editedMember);
             alert('Changes saved successfully!');
@@ -113,7 +119,7 @@ export default function Members() {
             }
             // return searchTerm.toLowerCase() === '' ? member : member.username.toLowerCase().includes(searchTerm)
         }).map(member => (
-            <tr key={member.id}>
+            <tr key={member.id} onClick={() => handleClickedMember(member)}>
                 <td>{member.id}</td>
                 <td>{member.username}</td>
                 <td>{member.firstname}</td>
