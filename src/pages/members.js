@@ -8,7 +8,6 @@ export default function Members() {
     const [selectedMember, setSelectedMember] = useState();
     const [editedMember, setEditedMember] = useState({});
     const [showPassword, setShowPassword] = useState(false);
-    const [userExists, setUserExists] = useState(true); 
     const [searchBy, setSearchBy] = useState('username');
 
     const fetchMembers = async () => {
@@ -29,11 +28,6 @@ export default function Members() {
         setSelectedMember();
     };
 
-    const handleSearchSubmit = async (event) => {
-        event.preventDefault();
-        // searchMembers();
-    };
-
     const handleSearchByChange = (event) => {
         setSearchBy(event.target.value);
     }
@@ -42,25 +36,6 @@ export default function Members() {
         setSelectedMember(member);
         setEditedMember({ ...member });
     }
-
-    // const searchMembers = async () => {
-    //     try {
-    //         const response = await axios.get(`http://localhost:8080/member/getAllMembers?term=${searchTerm}`);
-    //         const foundMember = response.data.find(member => member.username === searchTerm);
-    //         if (foundMember) {
-    //             setSelectedMember(foundMember);
-    //             setEditedMember({ ...foundMember });
-    //             setUserExists(true); 
-    //         } else {
-    //             setSelectedMember(null);
-    //             setEditedMember({});
-    //             setUserExists(false); 
-    //         }
-    //         setMembers(response.data);
-    //     } catch (error) {
-    //         console.error('Error searching members:', error);
-    //     }
-    // };
 
     const handleEditChange = (event) => {
         const { name, value } = event.target;
@@ -76,12 +51,11 @@ export default function Members() {
     };
 
     const saveChanges = async () => {
-        console.log(editedMember)
-        const isAlphaNumeric = (str) => /^[a-zA-Z0-9]*$/.test(str);
+        // const isAlphaNumeric = (str) => /^[a-zA-Z0-9]*$/.test(str);
 
-        const isValid = Object.values(editedMember).every(value => isAlphaNumeric(value));
+        // const isValid = Object.values(editedMember).every(value => isAlphaNumeric(value));
 
-        const isEmptyField = Object.values(editedMember).some(value => value === '');
+        // const isEmptyField = Object.values(editedMember).some(value => value === '');
 
         // if (isEmptyField){
         //     alert('Please fill in all fields.');
@@ -92,6 +66,8 @@ export default function Members() {
         //     alert('Member details should only contain letters and Numbers.');
         //     return;
         // }
+        
+
         try {
             await axios.put(`http://localhost:8080/member/updateMember?id=${editedMember.id}`, editedMember);
             alert('Changes saved successfully!');
@@ -120,7 +96,7 @@ export default function Members() {
             }
             // return searchTerm.toLowerCase() === '' ? member : member.username.toLowerCase().includes(searchTerm)
         }).map(member => (
-            <tr key={member.id} onClick={() => handleClickedMember(member)} className={`table-item ${selectedMember == member ? 'member-selected' : ''}`}>
+            <tr key={member.id} onClick={() => handleClickedMember(member)} className={`table-item ${selectedMember === member ? 'member-selected' : ''}`}>
                 <td>{member.id}</td>
                 <td>{member.username}</td>
                 <td>{member.firstname}</td>
@@ -137,12 +113,10 @@ export default function Members() {
                 </div>
 
                 <div className="search-area">
-                    <form onSubmit={handleSearchSubmit}>
                         <div className="search-bar">
                             <label htmlFor="search">Search: </label>
                             <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} name="search" id="search"/>
                         </div>
-                    </form>
                     <div className="search-bar">
                         <label htmlFor='search-by'>Search by:</label>
                         <select name="search-by" id="search-by" value={searchBy} onChange={handleSearchByChange}>
@@ -153,7 +127,7 @@ export default function Members() {
                     </div>
                 </div>
                 <div className="members-list">
-                    {userExists ? (
+                    {/* {userExists ? ( */}
                         <div className="table-container">
                             <table>
                                 <thead>
@@ -169,9 +143,9 @@ export default function Members() {
                                 </tbody>
                             </table>
                         </div>
-                    ) : (
+                    {/* ) : (
                         <div>User does not exist</div>
-                    )}
+                    )} */}
                 </div>
             </div>
             <div className="user-details">
@@ -205,7 +179,7 @@ export default function Members() {
                                 onChange={handleEditChange}
                             />
                         </p>
-                        <p>
+                        <p className="pass">
                             Password:{" "}
                             <input
                                 type={showPassword ? "text" : "password"}
@@ -217,6 +191,7 @@ export default function Members() {
                                 type="checkbox"
                                 checked={showPassword}
                                 onChange={toggleShowPassword}
+                                className="checkers"
                             />
                         </p>
                         <p>
@@ -228,7 +203,7 @@ export default function Members() {
                                 onChange={handleEditChange}
                             />
                         </p>
-                    </div>
+                        </div>
                 )}
                 <button onClick={saveChanges}>Save changes</button>
             </div>

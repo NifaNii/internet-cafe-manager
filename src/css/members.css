@@ -9,6 +9,7 @@
 .members-main{
     height: 94vh;
     display: flex;
+    background-color: #E0E0E0;
 }
 
 .registered-members{
@@ -18,6 +19,7 @@
     margin: 10px;
     box-sizing: border-box;
     width: 400px;
+    background-color: white;
 }
 
 .members-title {
@@ -93,20 +95,33 @@
 
 
 .user-details {
-    background-color: #eeeaea;
     padding: 20px;
     height: 350px;
-    width: 18%;
-    border:2px solid #7a7a7a;
+    width: 260px;
+    border:1px solid #B6B6B6;
     text-align: center;
+    margin-top: 10px;
     /* position: absolute;
     top: 150px;
     right: 100px; */
 }
 
+.details{
+    text-align: right;
+}
+
 .user-details .details p {
     margin: 10px 0;
-    text-align: center;
+}
+
+.pass{
+    position: relative;
+}
+
+.checkers{
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
 
 .user-details button {
