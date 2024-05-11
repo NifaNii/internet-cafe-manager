@@ -26,6 +26,7 @@ export default function Members() {
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
+        setSelectedMember();
     };
 
     const handleSearchSubmit = async (event) => {
@@ -119,7 +120,7 @@ export default function Members() {
             }
             // return searchTerm.toLowerCase() === '' ? member : member.username.toLowerCase().includes(searchTerm)
         }).map(member => (
-            <tr key={member.id} onClick={() => handleClickedMember(member)}>
+            <tr key={member.id} onClick={() => handleClickedMember(member)} className={`table-item ${selectedMember == member ? 'member-selected' : ''}`}>
                 <td>{member.id}</td>
                 <td>{member.username}</td>
                 <td>{member.firstname}</td>
@@ -129,37 +130,50 @@ export default function Members() {
     };
 
     return (
-        <div className="tab-content">
-            <form onSubmit={handleSearchSubmit}>
-                <div className="search-bar">
-                    <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} />
+        <div className="members-main">
+            <div className="registered-members">
+                <div className="members-title">
+                    <p>Registered Members</p>
                 </div>
-            </form>
-            <label for='search-by'>Search by:</label>
-            <select name="search-by" id="search-by" value={searchBy} onChange={handleSearchByChange}>
-                <option value='username'>Username</option>
-                <option value='firstname'>First Name</option>
-                <option value='lastname'>Last Name</option>
-            </select>
-            {userExists ? (
-                <div className="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Username</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {renderMembers()}
-                        </tbody>
-                    </table>
+
+                <div className="search-area">
+                    <form onSubmit={handleSearchSubmit}>
+                        <div className="search-bar">
+                            <label htmlFor="search">Search: </label>
+                            <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} name="search" id="search"/>
+                        </div>
+                    </form>
+                    <div className="search-bar">
+                        <label htmlFor='search-by'>Search by:</label>
+                        <select name="search-by" id="search-by" value={searchBy} onChange={handleSearchByChange}>
+                            <option value='username'>Username</option>
+                            <option value='firstname'>First Name</option>
+                            <option value='lastname'>Last Name</option>
+                        </select>
+                    </div>
                 </div>
-            ) : (
-                <div>User does not exist</div>
-            )}
+                <div className="members-list">
+                    {userExists ? (
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderMembers()}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <div>User does not exist</div>
+                    )}
+                </div>
+            </div>
             <div className="user-details">
                 <h2>User Details</h2>
                 {selectedMember && (
