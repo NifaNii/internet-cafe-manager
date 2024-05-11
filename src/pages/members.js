@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./style.css";
+import "../css/members.css";
 import axios from "axios";
 
 export default function Members() {
@@ -53,7 +53,11 @@ export default function Members() {
 
     const handleEditChange = (event) => {
         const { name, value } = event.target;
-        setEditedMember({ ...editedMember, [name]: value });
+        // if (/^[a-zA-Z0-9]*$/.test(value) || value === ''){
+            setEditedMember({ ...editedMember, [name]: value });
+        // }else{
+        //     alert('Input should contain only letters and numbers.');
+        // }
     };
 
     const toggleShowPassword = () => {
@@ -61,6 +65,21 @@ export default function Members() {
     };
 
     const saveChanges = async () => {
+        const isAlphaNumeric = (str) => /^[a-zA-Z0-9]*$/.test(str);
+
+        const isValid = Object.values(editedMember).every(value => isAlphaNumeric(value));
+
+        const isEmptyField = Object.values(editedMember).some(value => value === '');
+
+        if (isEmptyField){
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        if (!isValid){
+            alert('Member details should only contain letters and Numbers.');
+            return;
+        }
         try {
             await axios.put(`http://localhost:8080/member/updateMember?id=${editedMember.id}`, editedMember);
             alert('Changes saved successfully!');
@@ -77,6 +96,7 @@ export default function Members() {
                 <td>{member.username}</td>
                 <td>{member.firstname}</td>
                 <td>{member.lastname}</td>
+                <td>{member.balance}</td>
             </tr>
         ));
     };
@@ -150,6 +170,15 @@ export default function Members() {
                                 type="checkbox"
                                 checked={showPassword}
                                 onChange={toggleShowPassword}
+                            />
+                        </p>
+                        <p>
+                            Balance:{" "}
+                            <input
+                                type="number"
+                                name="balance"
+                                value={editedMember.balance}
+                                onChange={handleEditChange}
                             />
                         </p>
                     </div>
