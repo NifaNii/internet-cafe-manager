@@ -9,6 +9,7 @@ export default function Members() {
     const [editedMember, setEditedMember] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [userExists, setUserExists] = useState(true); 
+    const [searchBy, setSearchBy] = useState('username');
 
     const fetchMembers = async () => {
         try {
@@ -31,6 +32,10 @@ export default function Members() {
         event.preventDefault();
         searchMembers();
     };
+
+    const handleSearchByChange = (event) => {
+        setSearchBy(event.target.value);
+    }
 
     const searchMembers = async () => {
         try {
@@ -91,14 +96,28 @@ export default function Members() {
 
     const renderMembers = () => {
         return members.filter((member) => {
-            return searchTerm.toLowerCase() === '' ? member : member.username.toLowerCase().includes(searchTerm)
+            const searchTermLower = searchTerm.toLowerCase();
+            if(searchTermLower === ''){
+                return true;
+            }
+
+            switch (searchBy){
+                case 'username':
+                    return member.username.toLowerCase().includes(searchTermLower);
+                case 'firstname':
+                    return member.firstname.toLowerCase().includes(searchTermLower);
+                case 'lastname':
+                    return member.lastname.toLowerCase().includes(searchTermLower);
+                default:
+                    return false;
+            }
+            // return searchTerm.toLowerCase() === '' ? member : member.username.toLowerCase().includes(searchTerm)
         }).map(member => (
             <tr key={member.id}>
                 <td>{member.id}</td>
                 <td>{member.username}</td>
                 <td>{member.firstname}</td>
                 <td>{member.lastname}</td>
-                <td>{member.balance}</td>
             </tr>
         ));
     };
@@ -110,6 +129,12 @@ export default function Members() {
                     <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} />
                 </div>
             </form>
+            <label for='search-by'>Search by:</label>
+            <select name="search-by" id="search-by" value={searchBy} onChange={handleSearchByChange}>
+                <option value='username'>Username</option>
+                <option value='firstname'>First Name</option>
+                <option value='lastname'>Last Name</option>
+            </select>
             {userExists ? (
                 <div className="table-container">
                     <table>
