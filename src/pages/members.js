@@ -90,7 +90,9 @@ export default function Members() {
     };
 
     const renderMembers = () => {
-        return members.map(member => (
+        return members.filter((member) => {
+            return searchTerm.toLowerCase() === '' ? member : member.username.toLowerCase().includes(searchTerm)
+        }).map(member => (
             <tr key={member.id}>
                 <td>{member.id}</td>
                 <td>{member.username}</td>
