@@ -6,10 +6,48 @@
     
 } */
 
+.members-main{
+    height: 94vh;
+    display: flex;
+    background-color: #E0E0E0;
+}
+
+.registered-members{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #B6B6B6;
+    margin: 10px;
+    box-sizing: border-box;
+    width: 400px;
+    background-color: white;
+}
+
+.members-title {
+    text-align: center;
+    background-color: #cfcaca;
+}
+
+.members-title p{
+    margin: 0;
+}
+
+.search-area{
+    display: flex;
+    border-top: 1px solid #B6B6B6;
+    padding-top: 5px;
+    justify-content: space-evenly;
+}
+
+.members-list{
+    border: 1px solid #B6B6B6;
+    margin: 5px;
+    height: 100%;
+    overflow-y: scroll;
+}
+
 .table-container {
-    width: 50%;
-    margin: 20px;
     background-color: rgb(255, 255, 255);
+    width: 100%;
 }
 
 .content-container {
@@ -19,45 +57,71 @@
 }
 
 .table-container table {
-    width: 100%;
     border-collapse: collapse;
+    width: 100%;
 }
 
 .table-container th,
 .table-container td {
-    border: 1px solid #a5a5a5;
-    padding: 10px;
+    border: 1px solid #B6B6B6;
 }
 
+.table-container td{
+    padding: 5px 10px 5px 10px;
+}
+
+.table-container tbody tr:hover{
+    background-color: #d8d7d7;
+    cursor: pointer;
+}
+
+.member-selected{
+    border: 1px solid #1372CA !important;
+    background-color: #7CC0FF !important;
+}
+
+.table-container tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
 .search-bar {
-    margin-bottom: 20px;
-    margin-top: 10px;
-    margin-left:20px;
-    width:5in;
+    display: flex;
+    flex-direction: column;
 }
 
 .search-bar input[type="text"] {
-    width: 100%;
-    padding: 5px;
+    
 }
 
 
 .user-details {
-    background-color: #eeeaea;
     padding: 20px;
     height: 350px;
-    width: 18%;
-    border:2px solid #7a7a7a;
+    width: 260px;
+    border:1px solid #B6B6B6;
     text-align: center;
-    position: absolute;
+    margin-top: 10px;
+    /* position: absolute;
     top: 150px;
-    right: 100px;
+    right: 100px; */
+}
+
+.details{
+    text-align: right;
 }
 
 .user-details .details p {
     margin: 10px 0;
-    text-align: center;
+}
+
+.pass{
+    position: relative;
+}
+
+.checkers{
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
 
 .user-details button {

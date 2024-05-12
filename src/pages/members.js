@@ -5,9 +5,10 @@ import axios from "axios";
 export default function Members() {
     const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedMember, setSelectedMember] = useState(null);
+    const [selectedMember, setSelectedMember] = useState();
     const [editedMember, setEditedMember] = useState({});
-    const [showPassword, setShowPassword] = useState(false); 
+    const [showPassword, setShowPassword] = useState(false);
+    const [searchBy, setSearchBy] = useState('username');
 
     const fetchMembers = async () => {
         try {
@@ -20,33 +21,21 @@ export default function Members() {
 
     useEffect(() => {
         fetchMembers();
-    }, []); 
+    }, []);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
+        setSelectedMember();
     };
 
-    const handleSearchSubmit = async (event) => {
-        event.preventDefault();
-        searchMembers();
-    };
+    const handleSearchByChange = (event) => {
+        setSearchBy(event.target.value);
+    }
 
-    const searchMembers = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/member/getAllMembers?term=${searchTerm}`);
-            const foundMember = response.data.find(member => member.username === searchTerm);
-            if (foundMember) {
-                setSelectedMember(foundMember);
-                setEditedMember({ ...foundMember }); 
-            } else {
-                setSelectedMember(null); 
-                setEditedMember({}); 
-            }
-            setMembers(response.data);
-        } catch (error) {
-            console.error('Error searching members:', error);
-        }
-    };
+    const handleClickedMember = (member) => {
+        setSelectedMember(member);
+        setEditedMember({ ...member });
+    }
 
     const handleEditChange = (event) => {
         const { name, value } = event.target;
@@ -62,21 +51,23 @@ export default function Members() {
     };
 
     const saveChanges = async () => {
-        const isAlphaNumeric = (str) => /^[a-zA-Z0-9]*$/.test(str);
+        // const isAlphaNumeric = (str) => /^[a-zA-Z0-9]*$/.test(str);
 
-        const isValid = Object.values(editedMember).every(value => isAlphaNumeric(value));
+        // const isValid = Object.values(editedMember).every(value => isAlphaNumeric(value));
 
-        const isEmptyField = Object.values(editedMember).some(value => value === '');
+        // const isEmptyField = Object.values(editedMember).some(value => value === '');
 
-        if (isEmptyField){
-            alert('Please fill in all fields.');
-            return;
-        }
+        // if (isEmptyField){
+        //     alert('Please fill in all fields.');
+        //     return;
+        // }
 
-        if (!isValid){
-            alert('Member details should only contain letters and Numbers.');
-            return;
-        }
+        // if (!isValid){
+        //     alert('Member details should only contain letters and Numbers.');
+        //     return;
+        // }
+        
+
         try {
             await axios.put(`http://localhost:8080/member/updateMember?id=${editedMember.id}`, editedMember);
             alert('Changes saved successfully!');
@@ -85,41 +76,77 @@ export default function Members() {
             console.error('Error saving changes:', error);
         }
     };
-    
+
     const renderMembers = () => {
-        return members.map(member => (
-            <tr key={member.id}>
+        return members.filter((member) => {
+            const searchTermLower = searchTerm.toLowerCase();
+            if(searchTermLower === ''){
+                return true;
+            }
+
+            switch (searchBy){
+                case 'username':
+                    return member.username.toLowerCase().includes(searchTermLower);
+                case 'firstname':
+                    return member.firstname.toLowerCase().includes(searchTermLower);
+                case 'lastname':
+                    return member.lastname.toLowerCase().includes(searchTermLower);
+                default:
+                    return false;
+            }
+            // return searchTerm.toLowerCase() === '' ? member : member.username.toLowerCase().includes(searchTerm)
+        }).map(member => (
+            <tr key={member.id} onClick={() => handleClickedMember(member)} className={`table-item ${selectedMember === member ? 'member-selected' : ''}`}>
                 <td>{member.id}</td>
                 <td>{member.username}</td>
                 <td>{member.firstname}</td>
                 <td>{member.lastname}</td>
-                <td>{member.balance}</td>
             </tr>
         ));
     };
 
     return (
-        <div className="tab-content">
-            <form onSubmit={handleSearchSubmit}> {}
-                <div className="search-bar">
-                    <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} />
+        <div className="members-main">
+            <div className="registered-members">
+                <div className="members-title">
+                    <p>Registered Members</p>
                 </div>
-            </form>
-            <div className="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderMembers()}
-                    </tbody>
-                </table>
+
+                <div className="search-area">
+                        <div className="search-bar">
+                            <label htmlFor="search">Search: </label>
+                            <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} name="search" id="search"/>
+                        </div>
+                    <div className="search-bar">
+                        <label htmlFor='search-by'>Search by:</label>
+                        <select name="search-by" id="search-by" value={searchBy} onChange={handleSearchByChange}>
+                            <option value='username'>Username</option>
+                            <option value='firstname'>First Name</option>
+                            <option value='lastname'>Last Name</option>
+                        </select>
+                    </div>
+                </div>
+                <div className="members-list">
+                    {/* {userExists ? ( */}
+                        <div className="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderMembers()}
+                                </tbody>
+                            </table>
+                        </div>
+                    {/* ) : (
+                        <div>User does not exist</div>
+                    )} */}
+                </div>
             </div>
             <div className="user-details">
                 <h2>User Details</h2>
@@ -152,7 +179,7 @@ export default function Members() {
                                 onChange={handleEditChange}
                             />
                         </p>
-                        <p>
+                        <p className="pass">
                             Password:{" "}
                             <input
                                 type={showPassword ? "text" : "password"}
@@ -164,6 +191,7 @@ export default function Members() {
                                 type="checkbox"
                                 checked={showPassword}
                                 onChange={toggleShowPassword}
+                                className="checkers"
                             />
                         </p>
                         <p>
@@ -175,7 +203,7 @@ export default function Members() {
                                 onChange={handleEditChange}
                             />
                         </p>
-                    </div>
+                        </div>
                 )}
                 <button onClick={saveChanges}>Save changes</button>
             </div>
