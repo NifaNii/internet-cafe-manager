@@ -6,6 +6,7 @@ export default function PCManagement() {
     const [listOfPCs, setListOfPCs] = useState([]);
     const [selectedPC, setSelectedPC] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState('');
+    const [updatedSelectedPC, setUpdatedSelectedPC] = useState();
 
     const handleChange = (event) => {
         setSelectedStatus(event.target.value);
@@ -53,18 +54,10 @@ export default function PCManagement() {
 
         switch(execute){
             case 1:
-                console.log("execute order 1");
+                setUpdatedSelectedPC({...selectedPC, status: "Maintenance", loggeduser: null});
                 break;
             case 2:
-                const updatedSelectedPC = {...selectedPC, status: "Vacant", loggeduser: null};
-                updatePCStatus(updatedSelectedPC.id, updatedSelectedPC);
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-                break;
-            case 3:
-                console.log("execute order 3");
+                setUpdatedSelectedPC({...selectedPC, status: "Vacant", loggeduser: null});
                 break;
             default:
                 console.log("execute what order sire?");
@@ -76,10 +69,19 @@ export default function PCManagement() {
         // }, 1000);
     }
 
+    useEffect(() => {
+        if(updatedSelectedPC){
+            updatePCStatus(updatedSelectedPC.id, updatedSelectedPC);
+        }
+    }, [updatedSelectedPC])
+
     // updates the pc status
     const updatePCStatus = async(id, pc) => {
         try{
-            await axios.put(`http://localhost:8080/pc/updatePCStatus?id=${id}`, pc);
+            await axios.put(`http://localhost:8080/pc/loggedInUser?id=${id}`, pc);
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
         }catch(error){
             return console.log('error lmao');
         }
@@ -113,7 +115,10 @@ export default function PCManagement() {
 
                 <p className='pc-bold-me'>PC-{selectedPC.id}</p>
                 {selectedPC.status === 'Vacant' && (
-                <p style={{ color: 'green' }} className='pc-bold-me'>{selectedPC.status}</p>
+                <>
+                    <p style={{ color: 'green' }} className='pc-bold-me'>{selectedPC.status}</p>
+                    <button onClick={() => handleSubmit(1)}>Set to Maintenance</button>
+                </>
                 )}
                 {selectedPC.status === 'Occupied' && (
                 <>
@@ -123,7 +128,10 @@ export default function PCManagement() {
                 </>
                 )}
                 {selectedPC.status === 'Maintenance' && (
-                <p style={{ color: 'orange' }} className='pc-bold-me'>{selectedPC.status}</p>
+                    <>
+                        <p style={{ color: 'orange' }} className='pc-bold-me'>{selectedPC.status}</p>
+                        <button onClick={() => handleSubmit(2)}>Set to Vacant</button>
+                    </>
                 )}
 
                 {/* <label htmlFor='statusDropdown'>Change Status:</label>
