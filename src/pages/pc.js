@@ -46,13 +46,34 @@ export default function PCManagement() {
         }
     }
 
-    const handleSubmit = () => {
-        const updatedSelectedPC = {...selectedPC, status: selectedStatus };
-        console.log(updatedSelectedPC)
-        updatePCStatus(updatedSelectedPC.id, updatedSelectedPC);
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+    const handleSubmit = (execute) => {
+        // const updatedSelectedPC = {...selectedPC, status: selectedStatus };
+        // console.log(updatedSelectedPC)
+        // updatePCStatus(updatedSelectedPC.id, updatedSelectedPC);
+
+        switch(execute){
+            case 1:
+                console.log("execute order 1");
+                break;
+            case 2:
+                const updatedSelectedPC = {...selectedPC, status: "Vacant", loggeduser: null};
+                updatePCStatus(updatedSelectedPC.id, updatedSelectedPC);
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+                break;
+            case 3:
+                console.log("execute order 3");
+                break;
+            default:
+                console.log("execute what order sire?");
+                break;
+        }
+
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 1000);
     }
 
     // updates the pc status
@@ -90,18 +111,22 @@ export default function PCManagement() {
                     <img src='../images/4.png'/>
                 </div>
 
-                <p>PC-{selectedPC.id}</p>
+                <p className='pc-bold-me'>PC-{selectedPC.id}</p>
                 {selectedPC.status === 'Vacant' && (
-                <p style={{ color: 'green' }}>{selectedPC.status}</p>
+                <p style={{ color: 'green' }} className='pc-bold-me'>{selectedPC.status}</p>
                 )}
                 {selectedPC.status === 'Occupied' && (
-                <p style={{ color: 'red' }}>{selectedPC.status}</p>
+                <>
+                    <p style={{ color: 'red' }} className='pc-bold-me'>{selectedPC.status}</p>
+                    <p>Logged In User: {selectedPC.loggeduser}</p>
+                    <button onClick={() => handleSubmit(2)}>Force Log out</button>
+                </>
                 )}
                 {selectedPC.status === 'Maintenance' && (
-                <p style={{ color: 'orange' }}>{selectedPC.status}</p>
+                <p style={{ color: 'orange' }} className='pc-bold-me'>{selectedPC.status}</p>
                 )}
 
-                <label htmlFor='statusDropdown'>Change Status:</label>
+                {/* <label htmlFor='statusDropdown'>Change Status:</label>
                 <select id='statusDropdown' onChange={handleChange}>
                     <option value=''>Select Status</option>
                     <option value='Vacant'>Vacant</option>
@@ -110,7 +135,7 @@ export default function PCManagement() {
                 </select>
                 <br/>
                 <br/>
-                <button onClick={handleSubmit} disabled={!selectedStatus}>Submit</button>
+                <button onClick={handleSubmit} disabled={!selectedStatus}>Submit</button> */}
             </div>
         </div>
     );
