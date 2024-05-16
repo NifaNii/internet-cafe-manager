@@ -7,12 +7,21 @@ export default function Members() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedMember, setSelectedMember] = useState(null);
     const [editedMember, setEditedMember] = useState({});
-    const [showPassword, setShowPassword] = useState(false); 
+    const [showPassword, setShowPassword] = useState(false);
 
     const fetchMembers = async () => {
+        const authToken = localStorage.getItem('access');
+
+        // Set up Axios request configuration
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        };
+
         try {
-            const response = await axios.get(`http://localhost:8080/member/getAllMembers`);
-            setMembers(response.data);
+            const response = await axios.get(`http://localhost:8000/api/accounts/`, config);
+            setMembers(response.data.results);
         } catch (error) {
             console.error('Error fetching members:', error);
         }
@@ -20,7 +29,7 @@ export default function Members() {
 
     useEffect(() => {
         fetchMembers();
-    }, []); 
+    }, []);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -33,14 +42,14 @@ export default function Members() {
 
     const searchMembers = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/member/getAllMembers?term=${searchTerm}`);
-            const foundMember = response.data.find(member => member.username === searchTerm);
+            // const response = await axios.get(`http://localhost:8080/member/getAllMembers?term=${searchTerm}`);
+            const foundMember = members.find(member => member.username === searchTerm);
             if (foundMember) {
                 setSelectedMember(foundMember);
-                setEditedMember({ ...foundMember }); 
+                setEditedMember({ ...foundMember });
             } else {
-                setSelectedMember(null); 
-                setEditedMember({}); 
+                setSelectedMember(null);
+                setEditedMember({});
             }
             setMembers(response.data);
         } catch (error) {
@@ -51,7 +60,7 @@ export default function Members() {
     const handleEditChange = (event) => {
         const { name, value } = event.target;
         // if (/^[a-zA-Z0-9]*$/.test(value) || value === ''){
-            setEditedMember({ ...editedMember, [name]: value });
+        setEditedMember({ ...editedMember, [name]: value });
         // }else{
         //     alert('Input should contain only letters and numbers.');
         // }
@@ -68,31 +77,31 @@ export default function Members() {
 
         const isEmptyField = Object.values(editedMember).some(value => value === '');
 
-        if (isEmptyField){
+        if (isEmptyField) {
             alert('Please fill in all fields.');
             return;
         }
 
-        if (!isValid){
+        if (!isValid) {
             alert('Member details should only contain letters and Numbers.');
             return;
         }
         try {
-            await axios.put(`http://localhost:8080/member/updateMember?id=${editedMember.id}`, editedMember);
+            await axios.put(`http://localhost:80800/api/accounts/${editedMember.id}/`, editedMember);
             alert('Changes saved successfully!');
             fetchMembers();
         } catch (error) {
             console.error('Error saving changes:', error);
         }
     };
-    
+
     const renderMembers = () => {
         return members.map(member => (
             <tr key={member.id}>
                 <td>{member.id}</td>
                 <td>{member.username}</td>
-                <td>{member.firstname}</td>
-                <td>{member.lastname}</td>
+                <td>{member.first_name}</td>
+                <td>{member.last_name}</td>
                 <td>{member.balance}</td>
             </tr>
         ));
@@ -100,7 +109,7 @@ export default function Members() {
 
     return (
         <div className="tab-content">
-            <form onSubmit={handleSearchSubmit}> {}
+            <form onSubmit={handleSearchSubmit}> { }
                 <div className="search-bar">
                     <input type="text" placeholder="Search..." value={searchTerm} onChange={handleSearchChange} />
                 </div>
