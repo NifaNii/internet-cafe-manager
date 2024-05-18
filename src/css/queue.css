@@ -55,6 +55,7 @@
   background-color: #0081aa;
   color: #fffcfc; /* Remove display: block; property (already set to default) */
   margin-bottom: 10px; /* Adjust spacing between buttons if needed */
+  cursor: pointer;
 }
 
 /* New CSS for cell borders */
