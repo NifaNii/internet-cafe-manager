@@ -82,16 +82,16 @@ function Queue() {
           <div>
             <p className="number">{currentCustomer.id}</p>
             <p className="name">{currentCustomer.firstname}</p>
-            <div className="button-container">
-              <button onClick={handleCallNumber}>Call Next</button>
-              <button className="skip" onClick={handleSkipCustomer}>
-                Skip
-              </button>
-            </div>
           </div>
         ) : (
           <p>No one is currently being served.</p>
         )}
+        <div className="button-container">
+          <button onClick={handleCallNumber}>Call Next</button>
+          <button className="skip" onClick={handleSkipCustomer}>
+            Skip
+          </button>
+        </div>
       </div>
     </div>
   );
