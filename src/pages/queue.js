@@ -31,9 +31,14 @@ function Queue() {
     axios
       .get("http://localhost:8080/queue/popQueue")
       .then((response) => {
+        axios .post(`http://localhost:8080/email/sendEmail?toEmail=${response.data.email}&body=Your number ${response.data.id} has been called`);
         setCurrentCustomer(response.data);
         setQueue(queue.filter((item) => item.id !== response.data.id));
-      })
+    })
+      // .then((response) => {
+      //   setCurrentCustomer(response.data);
+      //   setQueue(queue.filter((item) => item.id !== response.data.id));
+      // })
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
       });
